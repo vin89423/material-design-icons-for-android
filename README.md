@@ -19,13 +19,13 @@ Developer could also assign color and alpha to each drawable.
 ## How to use
 
 #### Use in ActionBar / toolbar
-```
+```java
 MaterialIcon md = new MaterialIcon(this);
 menu.add("Account Circle").setIcon( materialIcon.draw("ic_account_circle") );
 
 ```
 #### Use in ImageView
-```
+```java
 ImageView img = (ImageView) view.findViewById(R.id.imgView);
 img.setImageDrawable( MaterialIcon.icon(context, "ic_3d_rotation").isMenuItem(false) );
 ```
