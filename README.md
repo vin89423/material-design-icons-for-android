@@ -1,8 +1,8 @@
 # Material Design Icons
 
 Provide icon drawable from [.ttf](http://en.wikipedia.org/wiki/TrueType) font file.
-This library will detect application theme to show light icon or dark icon automatically.
-Developer could also assign color and alpha by their own thought. 
+Detect application theme to show light icon or dark icon automatically.
+Developer could also assign color and alpha to each drawable. 
 
 ## Feature
 
@@ -18,7 +18,17 @@ Developer could also assign color and alpha by their own thought.
 	
 ## How to use
 
-	// TODO
+#### Use in ActionBar / toolbar
+```
+MaterialIcon md = new MaterialIcon(this);
+menu.add("Account Circle").setIcon( materialIcon.draw("ic_account_circle") );
+
+```
+#### Use in ImageView
+```
+ImageView img = (ImageView) view.findViewById(R.id.imgView);
+img.setImageDrawable( MaterialIcon.icon(context, "ic_3d_rotation").isMenuItem(false) );
+```
 
 ## Icon Licence
 
