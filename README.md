@@ -22,9 +22,7 @@ Developer could also assign color and alpha by their own thought.
 
 ## Icon Licence
 
-```
 Those icons come from Google [Material Design Icons](https://github.com/google/material-design-icons). All icons are released under an Attribution-ShareAlike 4.0 International license.
-```
 
 ## Library Licence
 
