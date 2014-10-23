@@ -1,21 +1,15 @@
 # Material Design Icons for Android
 
+## Feature
+
 Provide icon drawable from [.ttf](https://github.com/vin89423/material-design-icons-for-android/tree/master/library/res/raw) font file.
 Detect application theme to show light icon or dark icon automatically.
 Developer could also assign color and alpha to each drawable. 
-
-## Feature
-
-	// TODO
 	
 ## Screenshot
 
-	// TODO
+![Alt](https://raw.githubusercontent.com/vin89423/material-design-icons-for-android/master/sample.gif)
 
-## Getting Started
-
-	// TODO
-	
 ## How to use
 
 #### Use in ActionBar / toolbar
@@ -51,4 +45,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+```
+
+####Special thanks to
+```
+JoanZapata - I solved lots of bugs by reading his code.
 ```
