@@ -28,31 +28,33 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
-import android.view.WindowManager;
+import android.util.Log;
 
 public class MaterialDrawable extends Drawable {
 
-	protected Context context = null;
-    protected TextPaint paint = null;
-    
-    protected Boolean isMenuIcon = true;
+    private final Context context;
+
+    protected TextPaint paint;
 
     protected int theme = -1;
-    protected int alpha = 255;
     protected int color = Color.BLACK;
-	
-	protected String iconUnicode = "";
-	
+    protected int size = -1;
+    protected int alpha = 255;
+    
+    protected String iconUnicode = "";
+
     public MaterialDrawable(Context context, String iconUnicode) {
         this.context = context;
         this.iconUnicode = iconUnicode;
+        setProperties();
     }
-
-	public MaterialDrawable(Context context, String iconUnicode, int color) {
+    
+    public MaterialDrawable(Context context, String iconUnicode, int color) {
         this.context = context;
         this.iconUnicode = iconUnicode;
         this.color = color;
         this.theme = 255;
+        setProperties();
 	}
 
 	public MaterialDrawable(Context context, String iconUnicode, int theme, int color, int alpha) {
@@ -61,75 +63,86 @@ public class MaterialDrawable extends Drawable {
         this.theme = theme;
         this.color = color;
         this.alpha = alpha;
+        setProperties();
 	}
 
-    @Override
-    public void draw(Canvas canvas) {
-        Rect textBounds = new Rect();
-        paint = new TextPaint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setAntiAlias(true);
-        try {
-			paint.setTypeface(MaterialIcon.getTypeface(context));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        if (theme < 0) {
-        	getThemeIconColor();
-        }
-        paint.setColor(color);
-        paint.setAlpha(alpha);
-        paint.getTextBounds(iconUnicode, 0, 1, textBounds);
-        int xPos = 0, yPos = 0;
-        if (isMenuIcon) {
-        	DisplayMetrics dm = new DisplayMetrics();
-        	((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(dm);
-        	int size = (int) ( 32 * dm.density);
-        	paint.setTextSize( size );
-        	setBounds(0, 0, size, size); 
-            yPos = (int) (14.67f * context.getResources().getDisplayMetrics().density + 0.5f);
-        } else {
-        	paint.setTextSize( getBounds().height() );
-            xPos = (canvas.getWidth() / 2);
-            yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2));
-        }
-        canvas.drawText(iconUnicode, xPos, yPos, paint);
+    public MaterialDrawable setMenuItemSize() {
+    	DisplayMetrics dm = context.getResources().getDisplayMetrics();
+    	this.size = (int) ( 32 * dm.density );
+    	setBounds(0, 0, size, size);
+        invalidateSelf();
+        return this;
     }
     
-    public MaterialDrawable isMenuItem( Boolean status ) {
-    	isMenuIcon = status;
-    	return this;
+    public void setProperties(){
+    	paint = new TextPaint();
+    	if (theme < 0) {
+        	getThemeIconColor();
+        }
+    	try {
+    		paint.setTypeface(MaterialIcon.getTypeface(context));
+    	} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+    	paint.setStyle(Paint.Style.STROKE);
+    	paint.setTextAlign(Paint.Align.CENTER);
+    	paint.setUnderlineText(false);
+    	paint.setColor(color);
+    	paint.setAlpha(alpha);
+    	paint.setAntiAlias(true);
     }
     
     public void getThemeIconColor() {
-    	int color = 0xFFFFFF;
-		Resources.Theme theme = context.getTheme();
-		if (theme != null) {
-			TypedArray backgroundAttributes = theme.obtainStyledAttributes(new int[]{android.R.attr.colorBackground});
+    	int color = 0x000000;
+    	Resources.Theme theme = context.getTheme();
+    	if (theme != null) {
+    		TypedArray backgroundAttributes = theme.obtainStyledAttributes(new int[]{android.R.attr.colorBackground});
 			if (backgroundAttributes != null) {
-				color = backgroundAttributes.getColor(0, 0xFFFFFF);
+				color = backgroundAttributes.getColor(0, 0x000000);
 				backgroundAttributes.recycle();
 			}
-		}
-		// Convert to greyscale and check if < 128
-		if (color != 0xFFFFFF && 0.21 * Color.red(color) + 0.72 * Color.green(color) + 0.07 * Color.blue(color) < 128) {
+    	}
+    	Log.d( "Detect Theme", "Theme Color: "+ String.format("#%06X", (0xFFFFFF & color)) );
+    	// Convert color to greyscale, check if < 128
+    	if (color != 0xFFFFFF && 0.21 * Color.red(color) + 0.72 * Color.green(color) + 0.07 * Color.blue(color) < 128) {
 			this.color = Color.parseColor("#FFFFFF");			
 			this.alpha = (int) (255 * 0.8);
 		} else {
 			this.color = Color.parseColor("#333333");		
 			this.alpha = (int) (255 * 0.6);
 		}
+    }    
+
+    @Override
+    public void draw(Canvas canvas) {
+        paint.setTextSize(getBounds().height());
+        Rect textBounds = new Rect();
+        paint.getTextBounds(iconUnicode, 0, 1, textBounds);
+        float textBottom = (getBounds().height() - textBounds.height()) / 2f + textBounds.height() - textBounds.bottom;
+        canvas.drawText(iconUnicode, getBounds().width() / 2f, textBottom, paint);
     }
 
-	public int getColor() {
-		return color;
+    @Override
+    public void clearColorFilter() {
+        paint.setColorFilter(null);
+    }    
+    
+	/** ActionBar icon display wrong without this. */
+	@Override
+	public int getIntrinsicHeight() {
+	    return size;
+	}
+	
+	/** ActionBar icon display wrong without this. */
+	@Override
+	public int getIntrinsicWidth() {
+	    return size;
 	}
 
-	@Override
-	public int getOpacity() {
-		return alpha;
-	}
+    @Override
+    public int getOpacity() {
+        return this.alpha;
+    }
 
     @Override
     public void setAlpha(int alpha) {
@@ -137,13 +150,28 @@ public class MaterialDrawable extends Drawable {
         paint.setAlpha(alpha);
     }
 
-    public MaterialDrawable setColor(int color) {
-		this.color = color;
-		return this;
-	}
+    @Override
+    public void setColorFilter(ColorFilter cf) {
+        paint.setColorFilter(cf);
+    }
 
-	@Override
-	public void setColorFilter(ColorFilter cf) {
-		paint.setColorFilter(cf);		
-	}
+    
+    /** Copy from JoanZapata android-iconify, don't know what it is.
+
+    @Override
+    public boolean isStateful() {
+        return true;
+    }
+    @Override
+    public boolean setState(int[] stateSet) {
+        int oldValue = paint.getAlpha();
+        int newValue = isEnabled(stateSet) ? alpha : alpha / 2;
+        paint.setAlpha(newValue);
+        return oldValue != newValue;
+    }
+    
+    public static boolean isEnabled(int[] stateSet) {
+        return true;
+    }
+     */
 }
