@@ -1,4 +1,4 @@
-# Material Design Icons
+# Material Design Icons for Android
 
 Provide icon drawable from [.ttf](http://en.wikipedia.org/wiki/TrueType) font file.
 Detect application theme to show light icon or dark icon automatically.
