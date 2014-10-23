@@ -32,7 +32,7 @@ img.setImageDrawable( MaterialIcon.icon(context, "ic_3d_rotation").isMenuItem(fa
 
 ## Icon Licence
 
-Those icons come from Google [Material Design Icons](https://github.com/google/material-design-icons). All icons are released under an Attribution-ShareAlike 4.0 International license.
+Those icons come from Google [Material Design Icons](https://github.com/google/material-design-icons). All icons are released under an [Attribution-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-sa/4.0/) license.
 
 ## Library Licence
 
