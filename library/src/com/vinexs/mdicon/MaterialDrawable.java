@@ -154,24 +154,5 @@ public class MaterialDrawable extends Drawable {
     public void setColorFilter(ColorFilter cf) {
         paint.setColorFilter(cf);
     }
-
     
-    /** Copy from JoanZapata android-iconify, don't know what it is.
-
-    @Override
-    public boolean isStateful() {
-        return true;
-    }
-    @Override
-    public boolean setState(int[] stateSet) {
-        int oldValue = paint.getAlpha();
-        int newValue = isEnabled(stateSet) ? alpha : alpha / 2;
-        paint.setAlpha(newValue);
-        return oldValue != newValue;
-    }
-    
-    public static boolean isEnabled(int[] stateSet) {
-        return true;
-    }
-     */
 }
