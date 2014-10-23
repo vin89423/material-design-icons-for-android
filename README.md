@@ -1,6 +1,6 @@
 # Material Design Icons for Android
 
-Provide icon drawable from [.ttf](http://en.wikipedia.org/wiki/TrueType) font file.
+Provide icon drawable from [.ttf](https://github.com/vin89423/material-design-icons-for-android/tree/master/library/res/raw) font file.
 Detect application theme to show light icon or dark icon automatically.
 Developer could also assign color and alpha to each drawable. 
 
