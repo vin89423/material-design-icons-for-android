@@ -1,7 +1,7 @@
 # Material Design Icons for Android
 
 ## Feature
-* Provide tint and scalable [Material Design Icons](https://github.com/google/material-design-icons) to < API 21 Application.
+* Provide tint and scalable [Material Design Icons](https://github.com/google/material-design-icons) to Pre-Lollipop Device.
 * Provide icon drawable from [.ttf](https://github.com/vin89423/material-design-icons-for-android/tree/master/library/res/raw) font file.
 * Detect application theme to show light icon or dark icon automatically.
 	
