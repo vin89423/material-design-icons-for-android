@@ -68,7 +68,7 @@ public class MaterialDrawable extends Drawable {
 
     public MaterialDrawable setMenuItemSize() {
     	DisplayMetrics dm = context.getResources().getDisplayMetrics();
-    	this.size = (int) ( 32 * dm.density );
+    	this.size = (int) ( 24 * dm.density );
     	setBounds(0, 0, size, size);
         invalidateSelf();
         return this;
